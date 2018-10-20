@@ -35,7 +35,7 @@ class MainActivity : DaggerActivity() {
         launch(CommonPool + CoroutineExceptionHandler { _, e ->
             Log.e("TAG", "CoroutineExceptionHandler", e)
         }) {
-            Log.d("myData", weatherService.cityEntity("london").await().toString())
+            Log.d("myData", weatherService.cityEntity("london").await().body()?.toString())
         }
 
 

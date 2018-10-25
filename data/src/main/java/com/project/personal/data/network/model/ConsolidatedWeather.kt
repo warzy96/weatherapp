@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ConsolidatedWeather(
 
         @SerializedName("id")
-        val id: Int,
+        val id: Long,
 
         @SerializedName("applicable_date")
         val applicableDate: String,
@@ -23,13 +23,13 @@ data class ConsolidatedWeather(
         val windDirection: String,
 
         @SerializedName("min_temp")
-        val minTemp: Int,
+        val minTemp: Double,
 
         @SerializedName("max_temp")
-        val maxTemp: Int,
+        val maxTemp: Double,
 
         @SerializedName("the_temp")
-        val currentTemp: Int,
+        val currentTemp: Double,
 
         @SerializedName("air_pressure")
         val airPressure: Float,

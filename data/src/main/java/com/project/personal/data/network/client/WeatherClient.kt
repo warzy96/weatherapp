@@ -1,25 +1,24 @@
 package com.project.personal.data.network.client
 
 import com.project.personal.data.network.mappers.WeatherMapper
-import com.project.personal.data.network.model.ApiCityDetails
 import com.project.personal.data.network.service.WeatherService
 import com.project.personal.domain.model.CitySearchResult
+import com.project.personal.domain.model.WeatherModel
 import kotlinx.coroutines.experimental.Deferred
-import retrofit2.Response
+import kotlinx.coroutines.experimental.async
 
 class WeatherClient(private val weatherService: WeatherService,
                     private val weatherMapper: WeatherMapper) {
 
-    suspend fun getCitySearchResults(cityName: String): List<CitySearchResult> {
-        val response = weatherService.cityEntity(cityName).await()
-        if (response.isSuccessful) {
-            return weatherMapper.mapCitySearchModel(response.body())
-        } else {
-            throw Exception("Api response is unsuccessful! \n$response")
+    suspend fun getCitySearchResults(cityName: String): Deferred<List<CitySearchResult>> {
+        return async {
+            weatherMapper.mapCitySearchModel(weatherService.citySearch(cityName).await())
         }
     }
 
-    fun getCityDetails(cityId: Int): Deferred<Response<ApiCityDetails>> {
-        return weatherService.cityDetailsEntity(cityId)
+    suspend fun getCityDetails(cityId: Int): Deferred<WeatherModel> {
+        return async {
+            weatherMapper.mapWeatherModel(weatherService.cityDetailsEntity(cityId).await())
+        }
     }
 }

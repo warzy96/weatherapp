@@ -29,6 +29,9 @@ allprojects {
         coroutineAdapterVersion = "1.0.0"
         daggerVersion = "2.17"
         okHttpInterceptorVersion = "3.11.0"
+        retrofitCoroutineAdapterVersion = "1.0.0"
+        glideVersion = "4.8.0"
+        androidSVGVersion = "1.3"
     }
 }
 

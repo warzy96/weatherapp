@@ -5,6 +5,7 @@ import com.project.personal.weatherapp.di.application.ApplicationComponent
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
 import dagger.Subcomponent
 
+@ActivityScope
 @Subcomponent(
         modules = [
             ActivityModule::class

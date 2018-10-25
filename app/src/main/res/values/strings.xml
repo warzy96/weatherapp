@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="weather_image">weather_image</string>
+    <string name="today">Today</string>
+    <string name="degree_celsius">°C</string>
+    <string name="weather_state_text">Partly Cloudy</string>
+    <string name="wind_label">wind:</string>
+    <string name="humidityLabel">humidity:</string>
+    <string name="wind_speed">km/h</string>
+    <string name="percentage_sign">%</string>
 </resources>

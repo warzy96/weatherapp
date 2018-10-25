@@ -8,6 +8,8 @@ import dagger.Subcomponent
 @FragmentScope
 @Subcomponent(
         modules = [
+            FragmentPresenterModule::class,
+            FragmentModule::class
         ]
 )
 interface FragmentComponent : FragmentComponentInjects {
@@ -17,12 +19,17 @@ interface FragmentComponent : FragmentComponentInjects {
 
         fun build(): FragmentComponent
 
+        fun fragmentPresenterModule(fragmentPresenterModule: FragmentPresenterModule): Builder
+
+        fun fragmentModule(fragmentModule: FragmentModule): Builder
     }
 
     object Initializer {
 
         fun init(daggerFragment: DaggerFragment, activityComponent: ActivityComponent?): FragmentComponent? {
             return activityComponent?.fragmentComponentBuilder()
+                    ?.fragmentModule(FragmentModule(daggerFragment))
+                    ?.fragmentPresenterModule(FragmentPresenterModule(daggerFragment))
                     ?.build()
         }
     }

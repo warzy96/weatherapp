@@ -4,7 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class ApiCityDetails(
 
-        @SerializedName("id")
+        @SerializedName("consolidated_weather")
+        val consolidatedWeather: List<ConsolidatedWeather>,
+
+        @SerializedName("woeid")
         val cityId: Int,
 
         @SerializedName("title")
@@ -16,9 +19,7 @@ data class ApiCityDetails(
         @SerializedName("sun_set")
         val sunSet: String,
 
-        @SerializedName("timezone_name")
-        val timezoneName: String,
+        @SerializedName("timezone")
+        val timezoneName: String
 
-        @SerializedName("consolidated_weather")
-        val consolidatedWeather: List<ConsolidatedWeather>
 )

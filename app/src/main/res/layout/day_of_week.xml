@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/dayOfWeekWeatherIcon"
@@ -91,8 +91,7 @@
         android:id="@+id/dayOfWeekHumidityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="8dp"
         android:text="@string/humidityLabel"
         android:textAllCaps="true"
         android:textSize="14sp"
@@ -149,8 +148,7 @@
         android:id="@+id/dayOfWeekHumidityPercentageLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="8dp"
         android:text="@string/percentage_sign"
         android:textAllCaps="true"
         android:textSize="14sp"

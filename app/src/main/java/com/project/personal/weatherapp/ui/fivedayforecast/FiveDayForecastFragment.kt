@@ -38,7 +38,7 @@ class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        presenter.start(1105779)
+        presenter.start(680564)
     }
 
     private fun initRecyclerView() {

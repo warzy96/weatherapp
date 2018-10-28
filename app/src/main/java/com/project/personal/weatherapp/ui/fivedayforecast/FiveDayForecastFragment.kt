@@ -1,17 +1,14 @@
 package com.project.personal.weatherapp.ui.fivedayforecast
 
 import android.os.Bundle
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.project.personal.data.network.configuration.Urls.ICONS_BASE_URL
-import com.project.personal.domain.model.WeatherModel
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
 import com.project.personal.weatherapp.ui.base.BaseFragment
-import com.project.personal.weatherapp.util.ImageLoader
-import kotlinx.android.synthetic.main.day_of_week.*
+import kotlinx.android.synthetic.main.five_day_forecast_fragment.*
 import javax.inject.Inject
 
 class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
@@ -20,7 +17,7 @@ class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
     lateinit var presenter: FiveDayForecastContract.Presenter
 
     @Inject
-    lateinit var imageLoader: ImageLoader
+    lateinit var fiveDayForecastAdapter: FiveDayForecastAdapter
 
     companion object {
         const val TAG = "FiveDayForecastFragment"
@@ -31,32 +28,29 @@ class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //TODO: Dynamically solve this
         presenter.setView(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.day_of_week, container, false)
+        return inflater.inflate(R.layout.five_day_forecast_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
         presenter.start(1105779)
     }
 
-    override fun render(weatherModel: WeatherModel) {
-        val consolidatedWeather = weatherModel.weatherDetailsList.first()
-        dayOfWeekCurrentTemperatureText.text = String.format("%.2f", consolidatedWeather.currentTemp)
-        dayOfWeekHumidityText.text = consolidatedWeather.humidity.toString()
-        dayOfWeekWeatherStateText.text = consolidatedWeather.weatherState
-        dayOfWeekWindDirection.text = consolidatedWeather.windDirection
-        dayOfWeekWindSpeed.text = String.format("%.2f", consolidatedWeather.windSpeed)
-        imageLoader.renderImage(ICONS_BASE_URL +
-                consolidatedWeather.weatherStateAbbr + ".png", dayOfWeekWeatherIcon)
-        Log.d("myData", ICONS_BASE_URL + consolidatedWeather.weatherStateAbbr + ".png")
+    private fun initRecyclerView() {
+        five_day_forecast_recycler_view.adapter = fiveDayForecastAdapter
+        five_day_forecast_recycler_view.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun render(fiveDayForecastListViewModel: FiveDayForecastListViewModel) {
+        fiveDayForecastAdapter.setForecasts(fiveDayForecastListViewModel)
     }
 
     override fun inject(fragmentComponent: FragmentComponent?) {
-        fragmentComponent!!.inject(this)
+        fragmentComponent?.inject(this)
     }
 }

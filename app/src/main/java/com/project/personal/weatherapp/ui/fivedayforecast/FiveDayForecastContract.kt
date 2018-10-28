@@ -1,7 +1,5 @@
 package com.project.personal.weatherapp.ui.fivedayforecast
 
-import com.project.personal.domain.model.WeatherModel
-
 interface FiveDayForecastContract {
 
     interface Presenter {
@@ -12,6 +10,6 @@ interface FiveDayForecastContract {
     }
 
     interface View {
-        fun render(weatherModel: WeatherModel)
+        fun render(fiveDayForecastListViewModel: FiveDayForecastListViewModel)
     }
 }

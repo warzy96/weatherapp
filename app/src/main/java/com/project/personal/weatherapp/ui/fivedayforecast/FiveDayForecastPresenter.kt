@@ -7,7 +7,8 @@ import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class FiveDayForecastPresenter @Inject
-constructor(val fiveDayForecastUseCase: FetchFiveDayForecastUseCase)
+constructor(val fiveDayForecastUseCase: FetchFiveDayForecastUseCase,
+            val fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper)
     : FiveDayForecastContract.Presenter, BasePresenter<FiveDayForecastContract.View>() {
 
     override fun setView(fiveDayForecastContractView: FiveDayForecastContract.View) {
@@ -16,7 +17,8 @@ constructor(val fiveDayForecastUseCase: FetchFiveDayForecastUseCase)
 
     override fun start(cityId: Int) {
         launch(Android) {
-            view?.render(fiveDayForecastUseCase.execute(cityId).await())
+            view?.render(fiveDayForecastViewModelMapper
+                    .mapFiveDayForecastViewModels(fiveDayForecastUseCase.execute(cityId).await()))
         }
     }
 }

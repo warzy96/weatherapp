@@ -2,7 +2,7 @@ package com.project.personal.domain.repository
 
 import com.project.personal.domain.model.CitySearchResult
 import com.project.personal.domain.model.WeatherModel
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 
 interface WeatherRepository {
 

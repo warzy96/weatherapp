@@ -1,6 +1,6 @@
 package com.project.personal.weatherapp.di.application.module
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.project.personal.data.network.client.WeatherClient
 import com.project.personal.data.network.configuration.Urls
 import com.project.personal.data.network.mappers.WeatherMapper

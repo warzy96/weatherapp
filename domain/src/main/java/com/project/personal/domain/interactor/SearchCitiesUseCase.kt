@@ -3,7 +3,7 @@ package com.project.personal.domain.interactor
 import com.project.personal.domain.interactor.type.SingleQueryUseCase
 import com.project.personal.domain.model.CitySearchResult
 import com.project.personal.domain.repository.WeatherRepository
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import javax.inject.Inject
 
 class SearchCitiesUseCase @Inject

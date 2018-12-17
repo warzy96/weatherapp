@@ -4,7 +4,7 @@ import com.project.personal.data.network.client.WeatherClient
 import com.project.personal.domain.model.CitySearchResult
 import com.project.personal.domain.model.WeatherModel
 import com.project.personal.domain.repository.WeatherRepository
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 
 class WeatherRepositoryImpl(private val weatherClient: WeatherClient) : WeatherRepository {
 

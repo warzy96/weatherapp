@@ -1,6 +1,8 @@
 package com.project.personal.data.network.model
 
 import com.google.gson.annotations.SerializedName
+import com.project.personal.domain.mapper.Mappable
+import com.project.personal.domain.model.WeatherDetailsModel
 
 data class ConsolidatedWeather(
 
@@ -42,4 +44,14 @@ data class ConsolidatedWeather(
 
         @SerializedName("predictability")
         val predictability: Int
-)
+) : Mappable<WeatherDetailsModel> {
+    override fun mapToData(): WeatherDetailsModel {
+        return WeatherDetailsModel(id, applicableDate, weatherState, weatherStateAbbr,
+                windSpeed, windDirection, minTemp, maxTemp, currentTemp, airPressure,
+                humidity, visibility, predictability)
+    }
+
+    override fun isValid(): Boolean {
+        return true
+    }
+}

@@ -51,8 +51,8 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideWeatherClient(weatherMapper: WeatherMapper, weatherService: WeatherService): WeatherClient {
-        return WeatherClient(weatherService, weatherMapper)
+    fun provideWeatherClient(weatherService: WeatherService): WeatherClient {
+        return WeatherClient(weatherService)
     }
 
     @Provides

@@ -1,5 +1,6 @@
 package com.project.personal.weatherapp.ui.fivedayforecast
 
+import com.project.personal.domain.Success
 import com.project.personal.domain.interactor.FetchFiveDayForecastUseCase
 import com.project.personal.weatherapp.ui.base.BasePresenter
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +19,11 @@ constructor(val fiveDayForecastUseCase: FetchFiveDayForecastUseCase,
 
     override fun start(cityId: Int) {
         GlobalScope.launch(Dispatchers.Main) {
-            view?.render(fiveDayForecastViewModelMapper
-                    .mapFiveDayForecastViewModels(fiveDayForecastUseCase.execute(cityId).await()))
+            val forecast = fiveDayForecastUseCase.execute(cityId).await()
+
+            when (forecast) {
+                is Success -> view?.render(fiveDayForecastViewModelMapper.mapFiveDayForecastViewModels(forecast.data))
+            }
         }
     }
 }

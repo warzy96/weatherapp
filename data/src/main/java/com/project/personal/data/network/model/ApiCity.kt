@@ -16,8 +16,9 @@ data class ApiCity(
         val woeid: Int
 
 ) : Mappable<CitySearchResult> {
-    override fun mapToData(): CitySearchResult {
-        return CitySearchResult(title, locationType, woeid)
+    override fun mapToData(): CitySearchResult = when {
+        isValid() -> CitySearchResult(title, locationType, woeid)
+        else -> CitySearchResult(title, locationType, woeid)
     }
 
     override fun isValid(): Boolean {

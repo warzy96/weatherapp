@@ -1,24 +1,52 @@
 package com.project.personal.data.network.client
 
+import com.project.personal.domain.Failure
+import com.project.personal.domain.Result
+import com.project.personal.domain.Success
 import com.project.personal.data.network.mappers.WeatherMapper
 import com.project.personal.data.network.service.WeatherService
-import com.project.personal.domain.model.CitySearchResult
+import com.project.personal.domain.mapper.Mappable
+import com.project.personal.domain.model.CitySearchResults
 import com.project.personal.domain.model.WeatherModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.HttpException
+import retrofit2.Response
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
-class WeatherClient(private val weatherService: WeatherService,
-                    private val weatherMapper: WeatherMapper) {
+class WeatherClient(private val weatherService: WeatherService) {
 
-    fun getCitySearchResults(cityName: String): Deferred<List<CitySearchResult>> {
+    suspend fun getCitySearchResults(cityName: String): Deferred<Result<CitySearchResults>> = GlobalScope.async {
+        val result = weatherService.citySearch(cityName).getResult()
 
-        return GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT, null, {
-            weatherMapper.mapCitySearchModel(weatherService.citySearch(cityName).await())
-        })
+        when (result) {
+            is Success -> result.data.mapToData()
+            is Failure -> result
+        }
     }
 
-    fun getCityDetails(cityId: Int): Deferred<WeatherModel> {
-        return GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT, null, {
-            weatherMapper.mapWeatherModel(weatherService.cityDetailsEntity(cityId).await())
+    suspend fun getCityDetails(cityId: Int): Deferred<Result<WeatherModel>> = GlobalScope.async {
+        val result = weatherService.cityDetailsEntity(cityId).getResult()
+        when (result) {
+            is Success -> result.data.mapToData()
+            is Failure -> result
+        }
+    }
+
+    suspend fun <T : Mappable<R>, R : Any> Call<T>.getResult(): Result<T> = suspendCoroutine {
+        enqueue(object : Callback<T> {
+            override fun onFailure(call: Call<T>?, error: Throwable?) {
+                it.resume(Failure(error))
+            }
+
+            override fun onResponse(call: Call<T>?, response: Response<T>?) {
+                response?.body()?.run { it.resume(Success(this)) }
+                response?.errorBody()?.run { it.resume(Failure(HttpException(response))) }
+            }
         })
     }
 }

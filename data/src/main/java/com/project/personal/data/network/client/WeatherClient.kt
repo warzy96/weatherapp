@@ -1,10 +1,10 @@
 package com.project.personal.data.network.client
 
+import com.project.personal.data.Location
+import com.project.personal.data.network.service.WeatherService
 import com.project.personal.domain.Failure
 import com.project.personal.domain.Result
 import com.project.personal.domain.Success
-import com.project.personal.data.network.mappers.WeatherMapper
-import com.project.personal.data.network.service.WeatherService
 import com.project.personal.domain.mapper.Mappable
 import com.project.personal.domain.model.CitySearchResults
 import com.project.personal.domain.model.WeatherModel
@@ -31,6 +31,14 @@ class WeatherClient(private val weatherService: WeatherService) {
 
     suspend fun getCityDetails(cityId: Int): Deferred<Result<WeatherModel>> = GlobalScope.async {
         val result = weatherService.cityDetailsEntity(cityId).getResult()
+        when (result) {
+            is Success -> result.data.mapToData()
+            is Failure -> result
+        }
+    }
+
+    suspend fun getCitySearchResults(latitude: Double, longitude: Double): Deferred<Result<CitySearchResults>> = GlobalScope.async {
+        val result = weatherService.citySearch(Location(latitude, longitude)).getResult()
         when (result) {
             is Success -> result.data.mapToData()
             is Failure -> result

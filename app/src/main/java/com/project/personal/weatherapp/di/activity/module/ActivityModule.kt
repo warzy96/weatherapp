@@ -1,7 +1,7 @@
 package com.project.personal.weatherapp.di.activity.module
 
 import android.content.Context
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.view.LayoutInflater
 import com.project.personal.weatherapp.di.activity.ActivityScope
 import com.project.personal.weatherapp.di.activity.DaggerActivity
@@ -22,13 +22,13 @@ class ActivityModule(private val daggerActivity: DaggerActivity) {
 
     @Provides
     @ActivityScope
-    fun provideRouter(fragmentManager: FragmentManager): Router {
+    fun provideRouter(fragmentManager: androidx.fragment.app.FragmentManager): Router {
         return Router(daggerActivity, fragmentManager)
     }
 
     @Provides
     @ActivityScope
-    fun provideFragmentManager(): FragmentManager {
+    fun provideFragmentManager(): androidx.fragment.app.FragmentManager {
         return daggerActivity.supportFragmentManager
     }
 

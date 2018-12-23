@@ -1,7 +1,7 @@
 package com.project.personal.weatherapp.di.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.project.personal.weatherapp.di.ComponentFactory
 import com.project.personal.weatherapp.di.activity.DaggerActivity
 

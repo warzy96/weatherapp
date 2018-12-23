@@ -1,14 +1,14 @@
 package com.project.personal.weatherapp.ui.fivedayforecast
 
-import android.location.LocationManager
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
 import com.project.personal.weatherapp.ui.base.BaseFragment
+import com.project.personal.weatherapp.util.LocationProvider
 import kotlinx.android.synthetic.main.five_day_forecast_fragment.*
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
     lateinit var fiveDayForecastAdapter: FiveDayForecastAdapter
 
     @Inject
-    lateinit var locationManager: LocationManager
+    lateinit var locationProvider: LocationProvider
 
     companion object {
         const val TAG = "FiveDayForecastFragment"
@@ -44,22 +44,24 @@ class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initSwipeRefreshLayout()
-        presenter.start(680564)
+        initLocationProvider()
+        presenter.start(locationProvider.provideLocationCity())
+    }
+
+    private fun initLocationProvider() {
+        locationProvider.setCurrentActivity(activity!!)
     }
 
     private fun initSwipeRefreshLayout() {
         five_day_forecast_refresh_layout.setOnRefreshListener {
             five_day_forecast_refresh_layout.isRefreshing = true
-            presenter.start(680564)
+            presenter.start(locationProvider.provideLocationCity())
         }
     }
 
     private fun initRecyclerView() {
         five_day_forecast_recycler_view.adapter = fiveDayForecastAdapter
         five_day_forecast_recycler_view.layoutManager = LinearLayoutManager(context)
-    }
-
-    private fun initLocationManager() {
     }
 
     override fun render(fiveDayForecastListViewModel: FiveDayForecastListViewModel) {

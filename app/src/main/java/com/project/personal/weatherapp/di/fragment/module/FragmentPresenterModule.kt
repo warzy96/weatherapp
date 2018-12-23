@@ -1,6 +1,7 @@
 package com.project.personal.weatherapp.di.fragment.module
 
 import com.project.personal.domain.interactor.FetchFiveDayForecastUseCase
+import com.project.personal.domain.interactor.SearchCitiesByCoordinatesUseCase
 import com.project.personal.weatherapp.di.fragment.DaggerFragment
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
 import com.project.personal.weatherapp.di.fragment.FragmentScope
@@ -20,10 +21,11 @@ class FragmentPresenterModule(private val daggerFragment: DaggerFragment) {
     @Provides
     @FragmentScope
     fun provideFiveDayForecastPresenter(fiveDayForecastUseCase: FetchFiveDayForecastUseCase,
+                                        searchCitiesByCoordinatesUseCase: SearchCitiesByCoordinatesUseCase,
                                         fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper):
             FiveDayForecastContract.Presenter {
-        val presenter = FiveDayForecastPresenter(fiveDayForecastUseCase, fiveDayForecastViewModelMapper)
+        val presenter = FiveDayForecastPresenter(fiveDayForecastUseCase, searchCitiesByCoordinatesUseCase, fiveDayForecastViewModelMapper)
         getFragmentComponent()?.inject(presenter)
-        return FiveDayForecastPresenter(fiveDayForecastUseCase, fiveDayForecastViewModelMapper)
+        return presenter
     }
 }

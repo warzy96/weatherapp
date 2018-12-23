@@ -8,6 +8,9 @@ import com.project.personal.domain.repository.WeatherRepository
 import kotlinx.coroutines.Deferred
 
 class WeatherRepositoryImpl(private val weatherClient: WeatherClient) : WeatherRepository {
+    override suspend fun citySearch(latitude: Double, longitude: Double): Deferred<Result<CitySearchResults>> {
+        return weatherClient.getCitySearchResults(latitude, longitude)
+    }
 
     override suspend fun fiveDayForecast(cityId: Int): Deferred<Result<WeatherModel>> {
         return weatherClient.getCityDetails(cityId)

@@ -1,9 +1,12 @@
 package com.project.personal.weatherapp.di.application.module
 
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.project.personal.data.network.client.WeatherClient
 import com.project.personal.data.network.configuration.Urls
 import com.project.personal.data.network.mappers.WeatherMapper
+import com.project.personal.data.network.model.ApiCities
+import com.project.personal.data.network.service.SearchResultDeserializer
 import com.project.personal.data.network.service.WeatherService
 import com.project.personal.data.repository.WeatherRepositoryImpl
 import com.project.personal.domain.repository.WeatherRepository
@@ -23,12 +26,18 @@ class DataModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(Urls.RETROFIT_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(provideGsonConverter())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(okHttpClient)
                 .build()
     }
 
+    private fun provideGsonConverter(): GsonConverterFactory {
+        val builder = GsonBuilder()
+        builder.registerTypeAdapter(ApiCities::class.java, SearchResultDeserializer())
+
+        return GsonConverterFactory.create(builder.create())
+    }
     @Provides
     @Singleton
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {

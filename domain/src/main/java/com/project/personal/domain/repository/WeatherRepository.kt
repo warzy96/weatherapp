@@ -10,4 +10,7 @@ interface WeatherRepository {
     suspend fun citySearch(cityName: String): Deferred<Result<CitySearchResults>>
 
     suspend fun fiveDayForecast(cityId: Int): Deferred<Result<WeatherModel>>
+
+    suspend fun citySearch(latitude: Double, longitude: Double): Deferred<Result<CitySearchResults>>
+
 }

@@ -8,4 +8,5 @@
     <string name="humidityLabel">humidity:</string>
     <string name="wind_speed">km/h</string>
     <string name="percentage_sign">%</string>
+    <string name="title_location_weather">Current location</string>
 </resources>

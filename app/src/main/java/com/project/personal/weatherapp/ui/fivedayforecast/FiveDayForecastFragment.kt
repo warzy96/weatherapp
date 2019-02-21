@@ -44,12 +44,7 @@ class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initSwipeRefreshLayout()
-        initLocationProvider()
         presenter.start(locationProvider.provideLocationCity())
-    }
-
-    private fun initLocationProvider() {
-        locationProvider.setCurrentActivity(activity!!)
     }
 
     private fun initSwipeRefreshLayout() {

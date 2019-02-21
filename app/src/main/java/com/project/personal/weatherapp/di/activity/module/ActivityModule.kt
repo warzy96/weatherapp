@@ -1,12 +1,14 @@
 package com.project.personal.weatherapp.di.activity.module
 
 import android.content.Context
-import androidx.fragment.app.FragmentManager
 import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
 import com.project.personal.weatherapp.di.activity.ActivityScope
 import com.project.personal.weatherapp.di.activity.DaggerActivity
 import com.project.personal.weatherapp.di.activity.ForActivity
 import com.project.personal.weatherapp.router.Router
+import com.project.personal.weatherapp.util.LocationProvider
+import com.project.personal.weatherapp.util.LocationProviderImpl
 import dagger.Module
 import dagger.Provides
 
@@ -17,6 +19,13 @@ class ActivityModule(private val daggerActivity: DaggerActivity) {
     @ActivityScope
     @ForActivity
     fun provideActivityContext(): Context {
+        return daggerActivity
+    }
+
+    @Provides
+    @ActivityScope
+    @ForActivity
+    fun provideActivity(): AppCompatActivity {
         return daggerActivity
     }
 
@@ -36,5 +45,11 @@ class ActivityModule(private val daggerActivity: DaggerActivity) {
     @ActivityScope
     fun provideLayoutInflater(): LayoutInflater {
         return daggerActivity.layoutInflater
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideLocationProvider(@ForActivity activity: AppCompatActivity): LocationProvider {
+        return LocationProviderImpl(activity)
     }
 }

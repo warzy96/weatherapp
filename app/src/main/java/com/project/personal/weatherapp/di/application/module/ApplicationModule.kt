@@ -4,6 +4,7 @@ import android.content.Context
 import com.project.personal.weatherapp.app.WeatherApplication
 import com.project.personal.weatherapp.di.application.ForApplication
 import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastViewModelMapper
+import com.project.personal.weatherapp.ui.search.SearchViewModelMapper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -28,5 +29,11 @@ class ApplicationModule(private val weatherApplication: WeatherApplication) {
     @Singleton
     fun provideFiveDayForecastViewModelMapper(): FiveDayForecastViewModelMapper {
         return FiveDayForecastViewModelMapper()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchViewModelMapper(): SearchViewModelMapper {
+        return SearchViewModelMapper()
     }
 }

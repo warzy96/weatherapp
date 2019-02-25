@@ -3,7 +3,6 @@ package com.project.personal.weatherapp.util
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -32,7 +31,6 @@ constructor(val activity: AppCompatActivity) : LocationProvider {
             if (location != null) {
                 latitude = location.latitude;
                 longitude = location.longitude;
-                Log.d("location", "latitude = $latitude, longitude = $longitude")
             }
         }
         return com.project.personal.data.Location(latitude, longitude)

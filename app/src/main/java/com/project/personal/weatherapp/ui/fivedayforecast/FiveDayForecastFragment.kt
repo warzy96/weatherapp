@@ -15,13 +15,13 @@ import javax.inject.Inject
 class FiveDayForecastFragment : BaseFragment(), FiveDayForecastContract.View {
 
     @Inject
-    lateinit var presenter: FiveDayForecastContract.Presenter
-
-    @Inject
     lateinit var fiveDayForecastAdapter: FiveDayForecastAdapter
 
     @Inject
     lateinit var locationProvider: LocationProvider
+
+    @Inject
+    lateinit var presenter: FiveDayForecastPresenter
 
     companion object {
         const val TAG = "FiveDayForecastFragment"

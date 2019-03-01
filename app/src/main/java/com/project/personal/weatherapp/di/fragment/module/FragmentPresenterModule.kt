@@ -9,6 +9,7 @@ import com.project.personal.weatherapp.di.fragment.FragmentScope
 import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastContract
 import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastPresenter
 import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastViewModelMapper
+import com.project.personal.weatherapp.ui.fivedayforecast.cityforecast.FiveDayCityForecastPresenter
 import com.project.personal.weatherapp.ui.search.SearchPresenter
 import com.project.personal.weatherapp.ui.search.SearchViewModelMapper
 import dagger.Module
@@ -36,5 +37,13 @@ class FragmentPresenterModule(private val daggerFragment: DaggerFragment) {
     @FragmentScope
     fun provideSearchPresenter(searchCitiesUseCase: SearchCitiesUseCase, searchViewModelMapper: SearchViewModelMapper): SearchPresenter {
         return SearchPresenter(searchCitiesUseCase, searchViewModelMapper)
+    }
+
+    @Provides
+    @FragmentScope
+    fun provideFiveDayCityForecastPresenter(fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper,
+                                            fiveDayForecastUseCase: FetchFiveDayForecastUseCase):
+            FiveDayCityForecastPresenter {
+        return FiveDayCityForecastPresenter(fiveDayForecastViewModelMapper, fiveDayForecastUseCase)
     }
 }

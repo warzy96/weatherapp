@@ -17,11 +17,12 @@ class MainActivity : DaggerActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        router.showFiveDayForecastScreen()
+
         addFragmentButton.setOnClickListener {
             addFragmentButton.hide()
             router.showSearchCityScreen()
         }
-        router.showFiveDayForecastScreen()
     }
 
     override fun onBackPressed() {

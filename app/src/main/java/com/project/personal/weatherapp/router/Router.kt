@@ -2,7 +2,6 @@ package com.project.personal.weatherapp.router
 
 import android.app.Activity
 import com.project.personal.weatherapp.R
-import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastFragment
 import com.project.personal.weatherapp.ui.pager.ActivityFragment
 import com.project.personal.weatherapp.ui.search.SearchFragment
 import javax.inject.Inject
@@ -13,7 +12,7 @@ constructor(private val activity: Activity, private val fragmentManager: android
 
     fun showFiveDayForecastScreen() {
         fragmentManager.beginTransaction()
-                .add(CONTAINER_ID, ActivityFragment.newInstance(), FiveDayForecastFragment.TAG)
+                .add(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
                 .commit()
     }
 

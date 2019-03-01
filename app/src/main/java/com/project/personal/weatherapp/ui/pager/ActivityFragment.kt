@@ -23,7 +23,7 @@ class ActivityFragment : DaggerFragment() {
     @Inject
     lateinit var stringUtil: StringUtil
 
-    private lateinit var forecastPagerAdapter: ForecastPagerAdapter
+    lateinit var forecastPagerAdapter: ForecastPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

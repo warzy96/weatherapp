@@ -19,7 +19,8 @@ constructor(val layoutInflater: LayoutInflater, val imageLoader: ImageLoader)
     : RecyclerView.Adapter<FiveDayForecastAdapter.FiveDayForecastViewHolder>() {
 
     private val forecasts = ArrayList<FiveDayForecastViewModel>()
-    private val colors = generateColorsInHex(ContextCompat.getColor(this.layoutInflater.context, R.color.colorPrimaryDark), 0.3f, 10)
+    private val colors = generateColorsInHex(ContextCompat.getColor(this.layoutInflater.context, R.color.colorPrimaryDark),
+            0.3f, 10)
 
     override fun getItemCount(): Int {
         return forecasts.size

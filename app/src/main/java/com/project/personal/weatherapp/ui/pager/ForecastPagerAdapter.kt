@@ -4,17 +4,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.project.personal.weatherapp.R
-import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastFragment
+import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastLocationFragment
 import com.project.personal.weatherapp.util.StringUtil
 
-class ForecastPagerAdapter(val stringUtil: StringUtil, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class ForecastPagerAdapter(stringUtil: StringUtil, fragmentManager: FragmentManager)
+    : FragmentPagerAdapter(fragmentManager) {
 
-    private val titles = ArrayList<Int>()
-    private val fragmentSuppliers = ArrayList<Fragment>()
+    private val titles = ArrayList<String>()
+    public val fragmentSuppliers = ArrayList<Fragment>()
 
     init {
-        fragmentSuppliers.add(FiveDayForecastFragment.newInstance())
-        titles.add(R.string.title_location_weather)
+        fragmentSuppliers.add(FiveDayForecastLocationFragment.newInstance())
+        titles.add(stringUtil.getStringResource(R.string.title_location_weather))
     }
 
     override fun getItem(position: Int): Fragment {
@@ -29,6 +30,12 @@ class ForecastPagerAdapter(val stringUtil: StringUtil, fragmentManager: Fragment
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return stringUtil.getStringResource(titles[position])
+        return titles[position]
+    }
+
+    fun addItem(fragment: Fragment, title: String) {
+        fragmentSuppliers.add(fragment)
+        titles.add(title)
+        notifyDataSetChanged()
     }
 }

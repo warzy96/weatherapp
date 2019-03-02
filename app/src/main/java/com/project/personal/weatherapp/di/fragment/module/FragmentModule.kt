@@ -6,7 +6,6 @@ import com.project.personal.weatherapp.di.fragment.FragmentScope
 import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastAdapter
 import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastContract
 import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastLocationFragment
-import com.project.personal.weatherapp.ui.pager.ForecastPagerAdapter
 import com.project.personal.weatherapp.ui.search.SearchAdapter
 import com.project.personal.weatherapp.util.ImageLoader
 import dagger.Module
@@ -31,8 +30,8 @@ class FragmentModule(private val daggerFragment: DaggerFragment) {
 
     @Provides
     @FragmentScope
-    fun provideSearchRecyclerViewAdapter(layoutInflater: LayoutInflater, forecastPagerAdapter: ForecastPagerAdapter)
+    fun provideSearchRecyclerViewAdapter(layoutInflater: LayoutInflater)
             : SearchAdapter {
-        return SearchAdapter(layoutInflater, forecastPagerAdapter)
+        return SearchAdapter(layoutInflater)
     }
 }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
 import com.project.personal.weatherapp.ui.base.BaseFragment
+import com.project.personal.weatherapp.ui.pager.ForecastPagerAdapter
 import kotlinx.android.synthetic.main.search_layout.*
 import javax.inject.Inject
 
@@ -28,9 +29,12 @@ class SearchFragment : BaseFragment(), SearchContract.View {
     @Inject
     lateinit var searchAdapter: SearchAdapter
 
+    lateinit var forecastPagerAdapter: ForecastPagerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter.setView(this)
+        searchAdapter.forecastPagerAdapter = forecastPagerAdapter
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,6 +58,10 @@ class SearchFragment : BaseFragment(), SearchContract.View {
 
     override fun inject(fragmentComponent: FragmentComponent?) {
         fragmentComponent?.inject(this)
+    }
+
+    fun setPagerAdapter(forecastPagerAdapter: ForecastPagerAdapter) {
+        this.forecastPagerAdapter = forecastPagerAdapter
     }
 
     private val listener = object : SearchView.OnQueryTextListener {

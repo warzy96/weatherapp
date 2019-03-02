@@ -5,7 +5,7 @@ import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.di.activity.ActivityComponent
 import com.project.personal.weatherapp.di.activity.DaggerActivity
 import com.project.personal.weatherapp.router.Router
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.pager_layout.*
 import javax.inject.Inject
 
 class MainActivity : DaggerActivity() {
@@ -18,11 +18,6 @@ class MainActivity : DaggerActivity() {
         setContentView(R.layout.activity_main)
 
         router.showFiveDayForecastScreen()
-
-        addFragmentButton.setOnClickListener {
-            addFragmentButton.hide()
-            router.showSearchCityScreen()
-        }
     }
 
     override fun onBackPressed() {

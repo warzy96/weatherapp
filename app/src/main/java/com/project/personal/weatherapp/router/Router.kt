@@ -3,6 +3,7 @@ package com.project.personal.weatherapp.router
 import android.app.Activity
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.ui.pager.ActivityFragment
+import com.project.personal.weatherapp.ui.pager.ForecastPagerAdapter
 import com.project.personal.weatherapp.ui.search.SearchFragment
 import javax.inject.Inject
 
@@ -16,9 +17,11 @@ constructor(private val activity: Activity, private val fragmentManager: android
                 .commit()
     }
 
-    fun showSearchCityScreen() {
+    fun showSearchCityScreen(forecastPagerAdapter: ForecastPagerAdapter) {
+        val searchFragment = SearchFragment.newInstance()
+        searchFragment.setPagerAdapter(forecastPagerAdapter)
         fragmentManager.beginTransaction()
-                .replace(CONTAINER_ID, SearchFragment.newInstance(), SearchFragment.TAG)
+                .replace(CONTAINER_ID, searchFragment, SearchFragment.TAG)
                 .addToBackStack(null)
                 .commit()
     }

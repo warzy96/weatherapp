@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.di.fragment.DaggerFragment
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
-import com.project.personal.weatherapp.util.StringUtil
+import com.project.personal.weatherapp.router.Router
 import kotlinx.android.synthetic.main.pager_layout.*
 import javax.inject.Inject
 
@@ -21,14 +21,10 @@ class ActivityFragment : DaggerFragment() {
     }
 
     @Inject
-    lateinit var stringUtil: StringUtil
-
     lateinit var forecastPagerAdapter: ForecastPagerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        forecastPagerAdapter = ForecastPagerAdapter(stringUtil, childFragmentManager)
-    }
+    @Inject
+    lateinit var router: Router
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.pager_layout, container, false)
@@ -42,8 +38,12 @@ class ActivityFragment : DaggerFragment() {
 
         val tabLayout = forecast_tab_layout
         tabLayout.setupWithViewPager(viewPager)
-    }
 
+        addFragmentButton.setOnClickListener {
+            router.showSearchCityScreen(forecastPagerAdapter)
+            addFragmentButton.hide()
+        }
+    }
 
     override fun inject(fragmentComponent: FragmentComponent?) {
         fragmentComponent?.inject(this)

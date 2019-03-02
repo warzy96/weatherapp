@@ -1,6 +1,5 @@
 package com.project.personal.weatherapp.ui.search
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,10 @@ import javax.inject.Inject
 
 class SearchAdapter
 @Inject
-constructor(val layoutInflater: LayoutInflater, val forecastPagerAdapter: ForecastPagerAdapter) :
+constructor(val layoutInflater: LayoutInflater) :
         RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
+    lateinit var forecastPagerAdapter: ForecastPagerAdapter
     private var searchResults = ArrayList<SearchItemViewModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -40,13 +40,11 @@ constructor(val layoutInflater: LayoutInflater, val forecastPagerAdapter: Foreca
         fun render(searchItemViewModel: SearchItemViewModel, forecastPagerAdapter: ForecastPagerAdapter) {
             itemView.cityNameTextView.text = searchItemViewModel.cityName
             itemView.setOnClickListener {
-                Log.d("myData", forecastPagerAdapter.count.toString())
                 val newFragment = FiveDayCityForecastFragment.newInstance()
                 newFragment.arguments?.putString(FiveDayCityForecastFragment.CITY_NAME_BUNDLE_KEY, searchItemViewModel
                         .cityName)
                 newFragment.arguments?.putInt(FiveDayCityForecastFragment.CITY_ID_BUNDLE_KEY, searchItemViewModel.woeid)
                 forecastPagerAdapter.addItem(newFragment, searchItemViewModel.cityName)
-                Log.d("myData", forecastPagerAdapter.count.toString())
             }
         }
     }

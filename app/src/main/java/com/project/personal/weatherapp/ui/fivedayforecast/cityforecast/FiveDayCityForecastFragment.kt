@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class FiveDayCityForecastFragment : BaseFragment(), FiveDayCityForecastContract.View {
 
-    private var cityName: String? = null
+    private lateinit var cityName: String
     private var cityId: Int? = null
 
     @Inject
@@ -26,18 +26,16 @@ class FiveDayCityForecastFragment : BaseFragment(), FiveDayCityForecastContract.
 
     companion object {
         const val TAG = "FiveDayCityForecastFragment"
-        const val CITY_NAME_BUNDLE_KEY = "cityName"
-        const val CITY_ID_BUNDLE_KEY = "cityId"
 
-        fun newInstance(): FiveDayCityForecastFragment {
-            return FiveDayCityForecastFragment()
+        fun newInstance(cityName: String, id: Int): FiveDayCityForecastFragment {
+            val fragment = FiveDayCityForecastFragment()
+            fragment.setCityNameAndId(cityName, id)
+            return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cityName = arguments?.get(CITY_NAME_BUNDLE_KEY).toString()
-        cityId = arguments?.getInt(CITY_ID_BUNDLE_KEY)
         presenter.setView(this)
     }
 
@@ -51,14 +49,27 @@ class FiveDayCityForecastFragment : BaseFragment(), FiveDayCityForecastContract.
         initSwipeRefreshLayout()
     }
 
-    private fun initSwipeRefreshLayout() {
+    override fun onResume() {
+        super.onResume()
+        presenter.start(cityId!!)
         five_day_forecast_refresh_layout.isRefreshing = true
-        presenter.start(id)
+    }
+
+    private fun initSwipeRefreshLayout() {
+        five_day_forecast_refresh_layout.setOnRefreshListener {
+            five_day_forecast_refresh_layout.isRefreshing = true
+            presenter.start(cityId!!)
+        }
     }
 
     private fun initRecyclerView() {
         five_day_forecast_recycler_view.adapter = fiveDayForecastAdapter
         five_day_forecast_recycler_view.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun setCityNameAndId(cityName: String, id: Int) {
+        this.cityName = cityName
+        this.cityId = id
     }
 
     override fun render(fiveDayForecastListViewModel: FiveDayForecastListViewModel) {

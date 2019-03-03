@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import com.project.personal.weatherapp.di.activity.ActivityScope
 import com.project.personal.weatherapp.di.activity.DaggerActivity
 import com.project.personal.weatherapp.di.activity.ForActivity
+import com.project.personal.weatherapp.di.fragment.FragmentScope
 import com.project.personal.weatherapp.router.Router
 import com.project.personal.weatherapp.ui.pager.ForecastPagerAdapter
 import com.project.personal.weatherapp.util.LocationProvider
@@ -58,7 +59,8 @@ class ActivityModule(private val daggerActivity: DaggerActivity) {
 
     @Provides
     @ActivityScope
-    fun providePagerAdapter(stringUtil: StringUtil, fragmentManager: FragmentManager): ForecastPagerAdapter {
+    fun providePagerAdapter(stringUtil: StringUtil, @FragmentScope fragmentManager: FragmentManager):
+            ForecastPagerAdapter {
         return ForecastPagerAdapter(stringUtil, fragmentManager)
     }
 }

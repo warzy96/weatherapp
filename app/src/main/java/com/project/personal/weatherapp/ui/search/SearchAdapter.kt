@@ -40,10 +40,8 @@ constructor(val layoutInflater: LayoutInflater) :
         fun render(searchItemViewModel: SearchItemViewModel, forecastPagerAdapter: ForecastPagerAdapter) {
             itemView.cityNameTextView.text = searchItemViewModel.cityName
             itemView.setOnClickListener {
-                val newFragment = FiveDayCityForecastFragment.newInstance()
-                newFragment.arguments?.putString(FiveDayCityForecastFragment.CITY_NAME_BUNDLE_KEY, searchItemViewModel
-                        .cityName)
-                newFragment.arguments?.putInt(FiveDayCityForecastFragment.CITY_ID_BUNDLE_KEY, searchItemViewModel.woeid)
+                val newFragment = FiveDayCityForecastFragment.newInstance(searchItemViewModel.cityName,
+                        searchItemViewModel.woeid)
                 forecastPagerAdapter.addItem(newFragment, searchItemViewModel.cityName)
             }
         }

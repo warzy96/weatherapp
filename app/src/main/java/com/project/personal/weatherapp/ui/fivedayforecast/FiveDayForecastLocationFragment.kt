@@ -60,7 +60,9 @@ class FiveDayForecastLocationFragment : BaseFragment(), FiveDayForecastContract.
     }
 
     override fun render(fiveDayForecastListViewModel: FiveDayForecastListViewModel) {
-        five_day_forecast_refresh_layout.isRefreshing = false
+        if (five_day_forecast_refresh_layout != null) {
+            five_day_forecast_refresh_layout.isRefreshing = false
+        }
         fiveDayForecastAdapter.setForecasts(fiveDayForecastListViewModel)
 
     }

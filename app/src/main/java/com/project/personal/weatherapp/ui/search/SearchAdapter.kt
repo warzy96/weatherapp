@@ -3,6 +3,7 @@ package com.project.personal.weatherapp.ui.search
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.ui.fivedayforecast.cityforecast.FiveDayCityForecastFragment
@@ -16,6 +17,7 @@ constructor(val layoutInflater: LayoutInflater) :
         RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     lateinit var forecastPagerAdapter: ForecastPagerAdapter
+    private lateinit var fragmentManager: FragmentManager
     private var searchResults = ArrayList<SearchItemViewModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -27,7 +29,7 @@ constructor(val layoutInflater: LayoutInflater) :
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.render(searchResults[position], forecastPagerAdapter)
+        holder.render(searchResults[position], forecastPagerAdapter, fragmentManager)
     }
 
     fun setResults(searchItemsViewModel: SearchItemsViewModel) {
@@ -35,11 +37,17 @@ constructor(val layoutInflater: LayoutInflater) :
         notifyDataSetChanged()
     }
 
+    fun setFragmentManager(fragmentManager: FragmentManager) {
+        this.fragmentManager = fragmentManager
+    }
+
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun render(searchItemViewModel: SearchItemViewModel, forecastPagerAdapter: ForecastPagerAdapter) {
+        fun render(searchItemViewModel: SearchItemViewModel, forecastPagerAdapter:
+        ForecastPagerAdapter, fragmentManager: FragmentManager) {
             itemView.cityNameTextView.text = searchItemViewModel.cityName
             itemView.setOnClickListener {
+                fragmentManager.popBackStackImmediate()
                 val newFragment = FiveDayCityForecastFragment.newInstance(searchItemViewModel.cityName,
                         searchItemViewModel.woeid)
                 forecastPagerAdapter.addItem(newFragment, searchItemViewModel.cityName)

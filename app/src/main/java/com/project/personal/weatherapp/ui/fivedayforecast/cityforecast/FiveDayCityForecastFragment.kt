@@ -73,8 +73,10 @@ class FiveDayCityForecastFragment : BaseFragment(), FiveDayCityForecastContract.
     }
 
     override fun render(fiveDayForecastListViewModel: FiveDayForecastListViewModel) {
-        five_day_forecast_refresh_layout.isRefreshing = false
-        fiveDayForecastAdapter.setForecasts(fiveDayForecastListViewModel)
+        if (five_day_forecast_refresh_layout != null) {
+            five_day_forecast_refresh_layout.isRefreshing = false
+            fiveDayForecastAdapter.setForecasts(fiveDayForecastListViewModel)
+        }
     }
 
     override fun inject(fragmentComponent: FragmentComponent?) {

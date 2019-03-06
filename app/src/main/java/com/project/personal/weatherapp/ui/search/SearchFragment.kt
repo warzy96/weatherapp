@@ -43,6 +43,7 @@ class SearchFragment : BaseFragment(), SearchContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        searchAdapter.setFragmentManager(fragmentManager!!)
         initRecyclerView()
         searchView.setOnQueryTextListener(listener)
     }

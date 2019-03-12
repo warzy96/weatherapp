@@ -29,9 +29,14 @@ class ActivityFragment : DaggerFragment() {
     @Inject
     lateinit var stringUtil: StringUtil
 
+    @Inject
+    lateinit var forecastPagerPresenter: ForecastPagerPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         forecastPagerAdapter = ForecastPagerAdapter(stringUtil, childFragmentManager)
+        forecastPagerPresenter.setAdapter(forecastPagerAdapter)
+        forecastPagerPresenter.start()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

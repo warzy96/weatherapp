@@ -1,6 +1,7 @@
 package com.project.personal.weatherapp.di.fragment.module
 
 import com.project.personal.domain.interactor.FetchFiveDayForecastUseCase
+import com.project.personal.domain.interactor.InsertCityUseCase
 import com.project.personal.domain.interactor.SearchCitiesByCoordinatesUseCase
 import com.project.personal.domain.interactor.SearchCitiesUseCase
 import com.project.personal.weatherapp.di.fragment.DaggerFragment
@@ -26,9 +27,11 @@ class FragmentPresenterModule(private val daggerFragment: DaggerFragment) {
     @FragmentScope
     fun provideFiveDayForecastPresenter(fiveDayForecastUseCase: FetchFiveDayForecastUseCase,
                                         searchCitiesByCoordinatesUseCase: SearchCitiesByCoordinatesUseCase,
-                                        fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper):
+                                        fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper,
+                                        insertCityUseCase: InsertCityUseCase):
             FiveDayForecastContract.Presenter {
-        val presenter = FiveDayForecastPresenter(fiveDayForecastUseCase, searchCitiesByCoordinatesUseCase, fiveDayForecastViewModelMapper)
+        val presenter = FiveDayForecastPresenter(fiveDayForecastUseCase,
+                searchCitiesByCoordinatesUseCase, fiveDayForecastViewModelMapper, insertCityUseCase)
         getFragmentComponent()?.inject(presenter)
         return presenter
     }
@@ -42,8 +45,10 @@ class FragmentPresenterModule(private val daggerFragment: DaggerFragment) {
     @Provides
     @FragmentScope
     fun provideFiveDayCityForecastPresenter(fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper,
-                                            fiveDayForecastUseCase: FetchFiveDayForecastUseCase):
+                                            fiveDayForecastUseCase: FetchFiveDayForecastUseCase,
+                                            insertCityUseCase: InsertCityUseCase):
             FiveDayCityForecastPresenter {
-        return FiveDayCityForecastPresenter(fiveDayForecastViewModelMapper, fiveDayForecastUseCase)
+        return FiveDayCityForecastPresenter(fiveDayForecastViewModelMapper,
+                fiveDayForecastUseCase, insertCityUseCase)
     }
 }

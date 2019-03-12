@@ -1,8 +1,9 @@
 package com.project.personal.domain.repository
 
+import com.project.personal.domain.Result
+import com.project.personal.domain.model.City
 import com.project.personal.domain.model.CitySearchResults
 import com.project.personal.domain.model.WeatherModel
-import com.project.personal.domain.Result
 import kotlinx.coroutines.Deferred
 
 interface WeatherRepository {
@@ -13,4 +14,7 @@ interface WeatherRepository {
 
     suspend fun citySearch(latitude: Double, longitude: Double): Deferred<Result<CitySearchResults>>
 
+    fun insertCity(city: City)
+
+    fun fetchCities(): List<City>
 }

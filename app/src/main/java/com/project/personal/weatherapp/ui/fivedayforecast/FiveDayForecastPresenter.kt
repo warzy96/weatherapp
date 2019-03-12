@@ -4,17 +4,21 @@ import com.project.personal.data.Location
 import com.project.personal.domain.Failure
 import com.project.personal.domain.Success
 import com.project.personal.domain.interactor.FetchFiveDayForecastUseCase
+import com.project.personal.domain.interactor.InsertCityUseCase
 import com.project.personal.domain.interactor.SearchCitiesByCoordinatesUseCase
 import com.project.personal.weatherapp.ui.base.BasePresenter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FiveDayForecastPresenter @Inject
+class FiveDayForecastPresenter
+@Inject
 constructor(val fiveDayForecastUseCase: FetchFiveDayForecastUseCase,
             val searchCitiesByCoordinatesUseCase: SearchCitiesByCoordinatesUseCase,
-            val fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper)
+            val fiveDayForecastViewModelMapper: FiveDayForecastViewModelMapper,
+            val insertCityUseCase: InsertCityUseCase)
     : FiveDayForecastContract.Presenter, BasePresenter<FiveDayForecastContract.View>() {
 
     override fun setView(fiveDayForecastContractView: FiveDayForecastContract.View) {
@@ -27,9 +31,16 @@ constructor(val fiveDayForecastUseCase: FetchFiveDayForecastUseCase,
                 val result = searchCitiesByCoordinatesUseCase.execute(location.latitude!!, location.longitude!!).await()
                 when (result) {
                     is Success -> {
-                        val forecast = fiveDayForecastUseCase.execute(result.data.citySearchResults.first().woeid).await()
+                        val forecast = fiveDayForecastUseCase.execute(result.data.cities.first().woeid).await()
+                        val city = result.data.cities.first()
                         when (forecast) {
-                            is Success -> view?.render(fiveDayForecastViewModelMapper.mapFiveDayForecastViewModels(forecast.data))
+                            is Success -> {
+                                withContext(Dispatchers.Default) {
+                                    insertCityUseCase.execute(city)
+                                }
+                                view?.render(fiveDayForecastViewModelMapper
+                                        .mapFiveDayForecastViewModels(forecast.data))
+                            }
                             is Failure -> forecast.error?.printStackTrace()
                         }
                     }

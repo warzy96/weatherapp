@@ -1,7 +1,12 @@
 package com.project.personal.weatherapp.di.application.module
 
+import android.content.Context
+import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.project.personal.data.database.WeatherDatabase
+import com.project.personal.data.database.crudder.CityCrudder
+import com.project.personal.data.database.dao.CitiesDao
 import com.project.personal.data.network.client.WeatherClient
 import com.project.personal.data.network.configuration.Urls
 import com.project.personal.data.network.mappers.WeatherMapper
@@ -10,6 +15,7 @@ import com.project.personal.data.network.service.SearchResultDeserializer
 import com.project.personal.data.network.service.WeatherService
 import com.project.personal.data.repository.WeatherRepositoryImpl
 import com.project.personal.domain.repository.WeatherRepository
+import com.project.personal.weatherapp.di.application.ForApplication
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -38,6 +44,7 @@ class DataModule {
 
         return GsonConverterFactory.create(builder.create())
     }
+
     @Provides
     @Singleton
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
@@ -54,14 +61,33 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideWeatherRepository(weatherClient: WeatherClient): WeatherRepository {
-        return WeatherRepositoryImpl(weatherClient)
+    fun provideWeatherRepository(weatherClient: WeatherClient, cityCrudder: CityCrudder): WeatherRepository {
+        return WeatherRepositoryImpl(weatherClient, cityCrudder)
     }
 
     @Provides
     @Singleton
     fun provideWeatherClient(weatherService: WeatherService): WeatherClient {
         return WeatherClient(weatherService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCityCrudder(cityDao: CitiesDao): CityCrudder {
+        return CityCrudder(cityDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWeatherDatabase(@ForApplication context: Context): WeatherDatabase {
+        return Room.databaseBuilder(context, WeatherDatabase::class.java, "weather-database")
+                .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCitiesDao(weatherDatabase: WeatherDatabase): CitiesDao {
+        return weatherDatabase.citiesDao()
     }
 
     @Provides

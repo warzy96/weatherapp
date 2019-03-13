@@ -2,7 +2,9 @@ package com.project.personal.weatherapp.ui.search
 
 import com.project.personal.domain.Failure
 import com.project.personal.domain.Success
+import com.project.personal.domain.interactor.InsertCityUseCase
 import com.project.personal.domain.interactor.SearchCitiesUseCase
+import com.project.personal.domain.model.City
 import com.project.personal.weatherapp.ui.base.BasePresenter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -12,7 +14,9 @@ import javax.inject.Inject
 class SearchPresenter
 @Inject
 constructor(val searchCitiesUseCase: SearchCitiesUseCase,
-            val searchViewModelMapper: SearchViewModelMapper) : BasePresenter<SearchContract.View>(),
+            val searchViewModelMapper: SearchViewModelMapper,
+            val insertCityUseCase: InsertCityUseCase) : BasePresenter<SearchContract
+.View>(),
         SearchContract.Presenter {
 
     override fun setView(view: SearchContract.View) {
@@ -32,4 +36,11 @@ constructor(val searchCitiesUseCase: SearchCitiesUseCase,
             }
         }
     }
+
+    override fun saveCity(city: City) {
+        GlobalScope.launch(Dispatchers.IO) {
+            insertCityUseCase.execute(city)
+        }
+    }
+
 }

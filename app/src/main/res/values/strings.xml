@@ -9,4 +9,6 @@
     <string name="wind_speed">km/h</string>
     <string name="percentage_sign">%</string>
     <string name="title_location_weather">Current location</string>
+    <string name="all_cities">All cities</string>
+    <string name="search_cities">Search</string>
 </resources>

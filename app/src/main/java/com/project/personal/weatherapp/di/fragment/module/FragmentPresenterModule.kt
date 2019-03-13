@@ -38,8 +38,9 @@ class FragmentPresenterModule(private val daggerFragment: DaggerFragment) {
 
     @Provides
     @FragmentScope
-    fun provideSearchPresenter(searchCitiesUseCase: SearchCitiesUseCase, searchViewModelMapper: SearchViewModelMapper): SearchPresenter {
-        return SearchPresenter(searchCitiesUseCase, searchViewModelMapper)
+    fun provideSearchPresenter(searchCitiesUseCase: SearchCitiesUseCase, searchViewModelMapper:
+    SearchViewModelMapper, insertCityUseCase: InsertCityUseCase): SearchPresenter {
+        return SearchPresenter(searchCitiesUseCase, searchViewModelMapper, insertCityUseCase)
     }
 
     @Provides

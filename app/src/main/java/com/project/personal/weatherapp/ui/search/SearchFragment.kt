@@ -2,14 +2,14 @@ package com.project.personal.weatherapp.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
 import com.project.personal.weatherapp.ui.base.BaseFragment
-import com.project.personal.weatherapp.ui.pager.ForecastPagerAdapter
 import kotlinx.android.synthetic.main.search_layout.*
 import javax.inject.Inject
 
@@ -23,18 +23,37 @@ class SearchFragment : BaseFragment(), SearchContract.View {
         }
     }
 
+    private val listener = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return false
+        }
+
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            presenter.start(query!!)
+            return false
+        }
+    }
+
     @Inject
     lateinit var presenter: SearchPresenter
 
     @Inject
     lateinit var searchAdapter: SearchAdapter
 
-    lateinit var forecastPagerAdapter: ForecastPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         presenter.setView(this)
-        searchAdapter.forecastPagerAdapter = forecastPagerAdapter
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val searchItem = menu.findItem(R.id.action_search_cities)
+        val searchView = searchItem?.actionView as SearchView
+        searchItem.setOnMenuItemClickListener(null)
+        searchView.setOnQueryTextListener(listener)
+        searchItem.expandActionView()
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,8 +63,8 @@ class SearchFragment : BaseFragment(), SearchContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         searchAdapter.setFragmentManager(fragmentManager!!)
+        searchAdapter.setPresenter(presenter)
         initRecyclerView()
-        searchView.setOnQueryTextListener(listener)
     }
 
     private fun initRecyclerView() {
@@ -59,20 +78,5 @@ class SearchFragment : BaseFragment(), SearchContract.View {
 
     override fun inject(fragmentComponent: FragmentComponent?) {
         fragmentComponent?.inject(this)
-    }
-
-    fun setPagerAdapter(forecastPagerAdapter: ForecastPagerAdapter) {
-        this.forecastPagerAdapter = forecastPagerAdapter
-    }
-
-    private val listener = object : SearchView.OnQueryTextListener {
-        override fun onQueryTextChange(newText: String?): Boolean {
-            return false
-        }
-
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            presenter.start(query!!)
-            return false
-        }
     }
 }

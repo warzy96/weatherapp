@@ -4,7 +4,6 @@ import com.project.personal.domain.interactor.GetCitiesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ForecastPagerPresenter
@@ -18,10 +17,8 @@ constructor(val getCitiesUseCase: GetCitiesUseCase) : PagerContract.Presenter {
     }
 
     override fun start() {
-        GlobalScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.Default) {
-                forecastPagerAdapter.update(getCitiesUseCase.execute())
-            }
+        GlobalScope.launch(Dispatchers.Default) {
+            forecastPagerAdapter.update(getCitiesUseCase.execute())
         }
     }
 }

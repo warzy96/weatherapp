@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.di.fragment.DaggerFragment
 import com.project.personal.weatherapp.di.fragment.FragmentComponent
-import com.project.personal.weatherapp.router.Router
 import com.project.personal.weatherapp.util.StringUtil
 import kotlinx.android.synthetic.main.pager_layout.*
 import javax.inject.Inject
@@ -22,9 +21,6 @@ class ActivityFragment : DaggerFragment() {
     }
 
     lateinit var forecastPagerAdapter: ForecastPagerAdapter
-
-    @Inject
-    lateinit var router: Router
 
     @Inject
     lateinit var stringUtil: StringUtil
@@ -48,14 +44,6 @@ class ActivityFragment : DaggerFragment() {
 
         val viewPager = forecast_view_pager
         viewPager.adapter = forecastPagerAdapter
-
-        val tabLayout = forecast_tab_layout
-        tabLayout.setupWithViewPager(viewPager)
-
-        addFragmentButton.setOnClickListener {
-            router.showSearchCityScreen(forecastPagerAdapter)
-            addFragmentButton.hide()
-        }
     }
 
     override fun inject(fragmentComponent: FragmentComponent?) {

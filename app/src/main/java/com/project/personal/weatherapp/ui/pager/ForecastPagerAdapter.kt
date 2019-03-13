@@ -36,6 +36,9 @@ class ForecastPagerAdapter(stringUtil: StringUtil, fragmentManager: FragmentMana
     }
 
     fun addItem(fragment: Fragment, title: String) {
+        //Do not add a city if it already exists in viewpager
+        if (titles.contains(title)) return
+
         fragmentSuppliers.add(fragment)
         titles.add(title)
         notifyDataSetChanged()

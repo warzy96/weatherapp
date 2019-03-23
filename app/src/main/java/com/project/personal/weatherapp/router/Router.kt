@@ -4,6 +4,7 @@ import android.app.Activity
 import com.project.personal.weatherapp.R
 import com.project.personal.weatherapp.ui.pager.ActivityFragment
 import com.project.personal.weatherapp.ui.search.SearchFragment
+import com.project.personal.weatherapp.ui.summary.SummaryFragment
 import javax.inject.Inject
 
 class Router
@@ -12,7 +13,8 @@ constructor(private val activity: Activity, private val fragmentManager: android
 
     fun showFiveDayForecastScreen() {
         fragmentManager.beginTransaction()
-                .add(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
+                .replace(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
+                .addToBackStack(null)
                 .commit()
     }
 
@@ -20,6 +22,12 @@ constructor(private val activity: Activity, private val fragmentManager: android
         fragmentManager.beginTransaction()
                 .replace(CONTAINER_ID, SearchFragment.newInstance(), SearchFragment.TAG)
                 .addToBackStack(null)
+                .commit()
+    }
+
+    fun showCitySummaryScreen() {
+        fragmentManager.beginTransaction()
+                .add(CONTAINER_ID, SummaryFragment.newInstance(), SummaryFragment.TAG)
                 .commit()
     }
 

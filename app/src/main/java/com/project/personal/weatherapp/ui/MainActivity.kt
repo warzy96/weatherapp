@@ -23,7 +23,7 @@ class MainActivity : DaggerActivity() {
 
         setSupportActionBar(navigationToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        router.showFiveDayForecastScreen()
+        router.showCitySummaryScreen()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

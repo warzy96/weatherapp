@@ -44,7 +44,14 @@ class FiveDayForecastLocationFragment : BaseFragment(), FiveDayForecastContract.
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initSwipeRefreshLayout()
-        presenter.start(locationProvider.provideLocationCity())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (five_day_forecast_refresh_layout != null) {
+            presenter.start(locationProvider.provideLocationCity())
+            five_day_forecast_refresh_layout.isRefreshing = true
+        }
     }
 
     private fun initSwipeRefreshLayout() {

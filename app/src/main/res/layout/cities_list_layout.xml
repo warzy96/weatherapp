@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/citiesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_animation_slide_in">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>

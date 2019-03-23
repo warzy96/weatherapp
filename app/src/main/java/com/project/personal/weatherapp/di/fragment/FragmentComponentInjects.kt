@@ -5,6 +5,7 @@ import com.project.personal.weatherapp.ui.fivedayforecast.FiveDayForecastPresent
 import com.project.personal.weatherapp.ui.fivedayforecast.cityforecast.FiveDayCityForecastFragment
 import com.project.personal.weatherapp.ui.pager.ActivityFragment
 import com.project.personal.weatherapp.ui.search.SearchFragment
+import com.project.personal.weatherapp.ui.summary.SummaryFragment
 
 interface FragmentComponentInjects {
 
@@ -17,4 +18,6 @@ interface FragmentComponentInjects {
     fun inject(searchFragment: SearchFragment)
 
     fun inject(fiveDayCityForecastFragment: FiveDayCityForecastFragment)
+
+    fun inject(summaryFragment: SummaryFragment)
 }

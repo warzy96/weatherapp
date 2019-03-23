@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="12dp"
+    android:backgroundTint="@color/colorPrimaryDark"
+    android:elevation="12dp"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="12dp"
+    card_view:contentPadding="8dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/forecastImageView"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/weather_image"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/cityNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:singleLine="false"
+            android:textAlignment="textStart"
+            android:textAllCaps="true"
+            android:textSize="32sp"
+            card_view:layout_constraintStart_toEndOf="@+id/forecastImageView"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/temperatureTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:textSize="32sp"
+            card_view:layout_constraintStart_toEndOf="@id/forecastImageView"
+            card_view:layout_constraintTop_toBottomOf="@id/cityNameTextView" />
+
+        <TextView
+            android:id="@+id/dayOfWeekDegreeCelsiusSign2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/degree_celsius"
+            android:textAllCaps="true"
+            android:textSize="32sp"
+            card_view:layout_constraintStart_toEndOf="@+id/temperatureTextView"
+            card_view:layout_constraintTop_toBottomOf="@+id/cityNameTextView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

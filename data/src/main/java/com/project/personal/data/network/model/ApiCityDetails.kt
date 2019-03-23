@@ -7,7 +7,6 @@ import com.project.personal.domain.Success
 import com.project.personal.domain.mapper.Mappable
 import com.project.personal.domain.model.WeatherDetailsModel
 import com.project.personal.domain.model.WeatherModel
-import java.lang.Exception
 import java.util.*
 
 data class ApiCityDetails(
@@ -40,7 +39,8 @@ data class ApiCityDetails(
                     weatherDetailsModelList.add(it.mapToData())
                 }
             }
-            Success(WeatherModel(title, sunRise, sunSet, timezoneName, weatherDetailsModelList))
+            Success(WeatherModel(title, cityId, sunRise, sunSet, timezoneName,
+                    weatherDetailsModelList))
         }
         else -> Failure(Exception("Weather details body is invalid"))
     }
